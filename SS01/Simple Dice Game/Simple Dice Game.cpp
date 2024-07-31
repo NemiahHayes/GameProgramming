@@ -4,11 +4,14 @@
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>
+#include <random>
 
-void aiturn(int&, int&);
+void aiturn(int&, int&, int, int);
 void playerturn(int&, int&);
 void printtext(int, int, bool);
-bool checkwinner(int, int, int, int);
+void CheckWinner(int, int, int, int, int&, int&, int&);
+bool IsDouble(int, int);
+int BiasedRoll();
 
 
 int main()
@@ -26,6 +29,10 @@ int main()
 	int aiD1 = 0;
 	int aiD2 = 0;
 
+	int playerwins = 0;
+	int aiwins = 0;
+	int draws = 0;
+
 	//Game Loop
 	do
 	{
@@ -38,11 +45,11 @@ int main()
 			key = _getch();
 
 			playerturn(playerD1, playerD2);
-			aiturn(aiD1, aiD2);
+			aiturn(aiD1, aiD2, playerD1, playerD2);
 		}
 		else
 		{
-			aiturn(aiD1, aiD2);
+			aiturn(aiD1, aiD2, playerD1, playerD2);
 			
 			//Post Text
 			std::cout << '\n' << "Press any key to roll... Press 'Q' to quit." << std::endl;
@@ -53,14 +60,8 @@ int main()
 			playerturn(playerD1, playerD2);
 		}
 
-		if (checkwinner(playerD1, playerD2, aiD1, aiD2))
-		{
-			std::cout << "\n" << "Player wins." << std::endl;
-		}
-		else 
-		{
-			std::cout << "\n" << "Ai wins." << std::endl;
-		}
+		CheckWinner(playerD1, playerD2, aiD1, aiD2, playerwins, aiwins, draws);
+
 	} while (key != 'q' && key != 'Q');
 
 
@@ -68,28 +69,66 @@ int main()
 }
 
 //Check Winner 
-bool checkwinner(int playerD1, int playerD2, int aiD1, int aiD2)
+void CheckWinner(int playerD1, int playerD2, int aiD1, int aiD2, int& playerwins, int& aiwins, int& draws)
 {
+	bool player = false;
+	bool ai = false;
 	//If player die are equal
-	if (playerD1 == playerD2)
+	if (IsDouble(playerD1, playerD2) && IsDouble(aiD1, aiD2)) // Both Double
 	{
-		//If ai is also equal
-		if (aiD1 == aiD2)
+		if (playerD1 > aiD1)
 		{
-			return ((playerD1 + playerD2) > (aiD1 + aiD2)) ? true : false;
+			player = true;
 		}
-		else
+		else if (aiD1 > playerD1)
 		{
-			return true;
+			ai = true;
 		}
 	}
-	else if (aiD1 == aiD2) //If ai is equal, but player is not
+	else if (IsDouble(playerD1, playerD2)) // Player Double
 	{
-		return false;
+		player = true;
+	}
+	else if (IsDouble(aiD1, aiD2)) //AI Double
+	{
+		ai = true;
+	}
+	else // Highest SUm
+	{
+		int playersum = playerD1 + playerD2;
+		int aisum = aiD1 + aiD2;
+		if (playersum > aisum)
+		{
+			player = true;
+		}
+		else if (playersum < aisum)
+		{
+			ai = true;
+		}
 	}
 
-	//Else return highest sum
-	return ((playerD1 + playerD2) > (aiD1 + aiD2)) ? true : false;
+	if (player)
+	{
+		std::cout << "Player Wins!" << std::endl;
+		playerwins++;
+	}
+	else if (ai)
+	{
+		std::cout << "AI Wins!" << std::endl;
+		aiwins++;
+	}
+	else
+	{
+		std::cout << "Draw!" << std::endl;
+		draws++;
+	}
+	int totalGames = playerwins + aiwins + draws;
+	double playerWinPercentage = (static_cast<double>(playerwins) / totalGames) * 100.0;
+	double aiWinPercentage = (static_cast<double>(aiwins) / totalGames) * 100.0;
+	double drawPercentage = (static_cast<double>(draws) / totalGames) * 100.0;
+	std::cout << "Player Win % : " << playerWinPercentage << "%" << std::endl;
+	std::cout << "AI Win % : " << aiWinPercentage << "%" << std::endl;
+	std::cout << "Draw % : " << drawPercentage << "%" << std::endl;
 }
 
 //For Player Turn
@@ -127,43 +166,68 @@ void printtext(int d1, int d2, bool player)
 	std::cout << "\n" << std::endl;
 }
 
-void aiturn(int& aiD1, int& aiD2)
+void aiturn(int& aiD1, int& aiD2, int playerD1, int playerD2)
 {
-	aiD1 = (rand() % 6) + 2;
+	bool aiWinCheck = rand() % 100 < 50 ? true : false;
 
-	aiD2 = (rand() % 6) + 2;
-
-	if (aiD1 != aiD2)
+	if (aiWinCheck)
 	{
-		if (aiD1 < 6)
+		if (!IsDouble(playerD1, playerD2))
 		{
-			if (((rand() % 100) + 1) > 70)
-			{
-				aiD1++;
-			}
+			aiD1 = aiD2 = BiasedRoll();
 		}
-
-		if (aiD2 < 6)
+		else
 		{
-			if (((rand() % 100) + 1) > 70)
+			if (playerD1 < 6)
 			{
-				aiD2++;
+				aiD1 = aiD2 = playerD1 + 1;
+			}
+			else
+			{
+				aiD1 = aiD2 = 6;
 			}
 		}
 	}
 	else
 	{
-		if (aiD1 != 6)
-		{
-			if (((rand() % 100) + 1) > 70)
-			{
-				aiD1++;
-				aiD2++;
-			}
-		}
+		aiD1 = BiasedRoll();
+		aiD2 = BiasedRoll();
 	}
 
 	printtext(aiD1, aiD2, false);
 
 	return;
+}
+
+bool IsDouble(int d1, int d2)
+{
+	return d1 == d2;
+}
+
+int BiasedRoll() {
+	int outcome = rand() % 100;
+	if (outcome < 15)
+	{
+		return 1;
+	}
+	else if (outcome < 35)
+	{
+		return 2;
+	}
+	else if (outcome < 55)
+	{
+		return 3;
+	}
+	else if (outcome < 75)
+	{
+		return 4;
+	}
+	else if (outcome < 95)
+	{
+		return 5;
+	}
+	else 
+	{
+		return 6;
+	}
 }

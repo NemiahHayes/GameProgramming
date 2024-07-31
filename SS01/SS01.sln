@@ -9,6 +9,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hidden Treasure", "Hidden T
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Using References", "Using References\ConsoleApplication1.vcxproj", "{95BF387B-574B-43C6-8BFF-3AA01EA92C2F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AI-Bot Letter Guess", "AI-Bot Letter Guess\AI-Bot Letter Guess.vcxproj", "{FAADBCD4-3872-4402-BE2B-0FEC2C329645}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Monty Hall", "Monty Hall\Monty Hall.vcxproj", "{33AFF139-09F5-4F8D-B687-4437A8B0B7AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +45,22 @@ Global
 		{95BF387B-574B-43C6-8BFF-3AA01EA92C2F}.Release|x64.Build.0 = Release|x64
 		{95BF387B-574B-43C6-8BFF-3AA01EA92C2F}.Release|x86.ActiveCfg = Release|Win32
 		{95BF387B-574B-43C6-8BFF-3AA01EA92C2F}.Release|x86.Build.0 = Release|Win32
+		{FAADBCD4-3872-4402-BE2B-0FEC2C329645}.Debug|x64.ActiveCfg = Debug|x64
+		{FAADBCD4-3872-4402-BE2B-0FEC2C329645}.Debug|x64.Build.0 = Debug|x64
+		{FAADBCD4-3872-4402-BE2B-0FEC2C329645}.Debug|x86.ActiveCfg = Debug|Win32
+		{FAADBCD4-3872-4402-BE2B-0FEC2C329645}.Debug|x86.Build.0 = Debug|Win32
+		{FAADBCD4-3872-4402-BE2B-0FEC2C329645}.Release|x64.ActiveCfg = Release|x64
+		{FAADBCD4-3872-4402-BE2B-0FEC2C329645}.Release|x64.Build.0 = Release|x64
+		{FAADBCD4-3872-4402-BE2B-0FEC2C329645}.Release|x86.ActiveCfg = Release|Win32
+		{FAADBCD4-3872-4402-BE2B-0FEC2C329645}.Release|x86.Build.0 = Release|Win32
+		{33AFF139-09F5-4F8D-B687-4437A8B0B7AB}.Debug|x64.ActiveCfg = Debug|x64
+		{33AFF139-09F5-4F8D-B687-4437A8B0B7AB}.Debug|x64.Build.0 = Debug|x64
+		{33AFF139-09F5-4F8D-B687-4437A8B0B7AB}.Debug|x86.ActiveCfg = Debug|Win32
+		{33AFF139-09F5-4F8D-B687-4437A8B0B7AB}.Debug|x86.Build.0 = Debug|Win32
+		{33AFF139-09F5-4F8D-B687-4437A8B0B7AB}.Release|x64.ActiveCfg = Release|x64
+		{33AFF139-09F5-4F8D-B687-4437A8B0B7AB}.Release|x64.Build.0 = Release|x64
+		{33AFF139-09F5-4F8D-B687-4437A8B0B7AB}.Release|x86.ActiveCfg = Release|Win32
+		{33AFF139-09F5-4F8D-B687-4437A8B0B7AB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
